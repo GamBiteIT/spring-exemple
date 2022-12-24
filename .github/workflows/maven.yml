@@ -29,6 +29,17 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+    - name: login to dockerhub
+      run: mvn clean install
+    - name: build & push docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image : abderhmanemahdigharzouli/spring-exemple
+        tags: latest
+        registry: docker.io
+        dockerfile: Dockerfile
+        username: ${{ secrets.SECRETS_DOCKER_USERNAME }}
+        password: ${{ secrets.SECRETS_DOCKER_PASSWORD }}
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
